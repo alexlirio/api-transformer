@@ -14,8 +14,7 @@ public class TransformerWarDto {
 		super();
 	}
 
-	public TransformerWarDto(Integer battles, TransformerTeamEnum championTeam,
-			List<TransformerDto> losingSurvivors) {
+	public TransformerWarDto(Integer battles, TransformerTeamEnum championTeam, List<TransformerDto> losingSurvivors) {
 		super();
 		this.battles = battles;
 		this.championTeam = championTeam;

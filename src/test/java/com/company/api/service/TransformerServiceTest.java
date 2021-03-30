@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.company.api.dto.TransformerDto;
 import com.company.api.exception.EntityNotFoundException;
+import com.company.api.exception.NoSurvivorException;
 import com.company.domain.entity.Transformer;
 import com.company.domain.entity.TransformerTeamEnum;
 import com.company.domain.repository.ITransformerRepository;
@@ -82,11 +83,12 @@ public class TransformerServiceTest {
 
 	@Test
 	public void war() {
-		List<Long> ids = List.of(1L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L);
+		List<Long> ids = List.of(1L, 5L);
 		String exceptionMessage = "Method not implemented yet";
-		Mockito.doThrow(new RuntimeException(exceptionMessage)).when(repository).findAllById(Mockito.eq(ids));
+		Mockito.doThrow(new NoSurvivorException(exceptionMessage)).when(repository).findAllByIdInAndTeamOrderByRankAsc(ids, TransformerTeamEnum.AUTOBOT);
+		Mockito.doThrow(new NoSurvivorException(exceptionMessage)).when(repository).findAllByIdInAndTeamOrderByRankAsc(ids, TransformerTeamEnum.DECEPTICON);
 
-		Exception ex = Assertions.assertThrows(RuntimeException.class, () -> service.war(ids));
+		Exception ex = Assertions.assertThrows(NoSurvivorException.class, () -> service.war(ids));
 		Assertions.assertEquals(ex.getMessage(), exceptionMessage);
 	}
 }

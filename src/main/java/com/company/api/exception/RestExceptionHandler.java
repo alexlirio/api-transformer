@@ -51,4 +51,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		RestErrorResponse error = new RestErrorResponse("Object Found", details);
 		return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
 	}
+
+	@ExceptionHandler(NoSurvivorException.class)
+	public final ResponseEntity<Object> handleNoSurvivorException(NoSurvivorException ex, WebRequest request) {
+		List<String> details = new ArrayList<>();
+		details.add(ex.getLocalizedMessage());
+		RestErrorResponse error = new RestErrorResponse("No Survivor", details);
+		return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+	}
 }
