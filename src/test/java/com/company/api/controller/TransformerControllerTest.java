@@ -1,5 +1,7 @@
 package com.company.api.controller;
 
+import java.util.List;
+
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,5 +85,14 @@ public class TransformerControllerTest {
 		mvc.perform(MockMvcRequestBuilders.get("/api/v1/registry/transformers"))
 			.andExpect(MockMvcResultMatchers.status().isOk())
 			.andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+	}
+
+	@Test
+	public void war() throws Exception {
+		List<Long> ids = List.of(1L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L);
+		mvc.perform(MockMvcRequestBuilders.post("/api/v1/war/transformers")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(ids)))
+			.andExpect(MockMvcResultMatchers.status().is5xxServerError());
 	}
 }
