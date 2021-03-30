@@ -2,8 +2,6 @@ package com.company.api.service;
 
 import java.util.List;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +11,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.company.api.dto.TransformerDto;
+import com.company.api.exception.EntityNotFoundException;
 import com.company.domain.entity.Transformer;
 import com.company.domain.entity.TransformerTeamEnum;
 import com.company.domain.repository.ITransformerRepository;
@@ -61,8 +60,7 @@ public class TransformerServiceTest {
 	@Test
 	public void delete() {
 		Long transformerId = 13L;
-		String exceptionMessage = "Entity Not Found";
-		Mockito.when(repository.existsById(Mockito.eq(transformerId))).thenReturn(true);
+		String exceptionMessage = String.format("Object with id %s not found", transformerId);
 		Mockito.doThrow(new EntityNotFoundException(exceptionMessage)).when(repository)
 				.deleteById(Mockito.eq(transformerId));
 
@@ -80,5 +78,15 @@ public class TransformerServiceTest {
 
 		List<TransformerDto> tl2 = service.list();
 		Assertions.assertEquals(tl2.size(), listSize);
+	}
+
+	@Test
+	public void war() {
+		List<Long> ids = List.of(1L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L);
+		String exceptionMessage = "Method not implemented yet";
+		Mockito.doThrow(new RuntimeException(exceptionMessage)).when(repository).findAllById(Mockito.eq(ids));
+
+		Exception ex = Assertions.assertThrows(RuntimeException.class, () -> service.war(ids));
+		Assertions.assertEquals(ex.getMessage(), exceptionMessage);
 	}
 }
