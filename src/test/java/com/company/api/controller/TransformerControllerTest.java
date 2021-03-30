@@ -89,10 +89,44 @@ public class TransformerControllerTest {
 
 	@Test
 	public void war() throws Exception {
-		List<Long> ids = List.of(1L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L);
+		List<Long> ids = List.of(1L, 5L);
 		mvc.perform(MockMvcRequestBuilders.post("/api/v1/war/transformers")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(ids)))
-			.andExpect(MockMvcResultMatchers.status().is5xxServerError());
+			.andExpect(MockMvcResultMatchers.status().isBadRequest());
+	}
+
+	@Test
+	public void givenTransformerWar_thenStatus200() throws Exception {
+		List<Integer> list = List.of(1, 2, 3, 4, 5, 6, 7, 8);
+		mvc.perform(MockMvcRequestBuilders.post("/api/v1/war/transformers")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(list)))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+	}
+
+	@Test
+	public void givenTransformerWar_whenStatus200_thenGetChampionTeam() throws Exception {
+		String teamName = "DECEPTICON";
+		List<Integer> list = List.of(1, 2, 3, 4, 5, 6, 7, 8);
+		mvc.perform(MockMvcRequestBuilders.post("/api/v1/war/transformers")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(list)))
+			.andExpect(MockMvcResultMatchers.status().isOk())
+			.andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+			.andExpect(MockMvcResultMatchers.jsonPath("championTeam", CoreMatchers.is(teamName)));
+	}
+
+	@Test
+	public void givenTransformerWar_whenStatus200_thenGetFirstLosingSurvivorName() throws Exception {
+		String losingSurvivorName = "Bumblebee";
+		List<Integer> list = List.of(1, 2, 3, 4, 5, 6, 7, 8);
+		mvc.perform(MockMvcRequestBuilders.post("/api/v1/war/transformers")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(list)))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+		.andExpect(MockMvcResultMatchers.jsonPath("losingSurvivors[0].name", CoreMatchers.is(losingSurvivorName)));
 	}
 }
