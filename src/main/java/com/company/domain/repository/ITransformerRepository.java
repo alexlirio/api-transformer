@@ -6,4 +6,5 @@ import com.company.domain.entity.Transformer;
 
 public interface ITransformerRepository extends JpaRepository<Transformer, Long> {
 
+	Boolean existsByNameIgnoreCase(String name);
 }
