@@ -9,6 +9,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import com.company.api.dto.TransformerDto;
 import com.company.api.exception.EntityNotFoundException;
@@ -72,12 +76,13 @@ public class TransformerServiceTest {
 	@Test
 	public void list() {
 		int listSize = 2;
-		List<Transformer> tl1 = List.of(
+		Page<Transformer> tl1 = new PageImpl<Transformer>(List.of(
 				new Transformer("Rumble", TransformerTeamEnum.DECEPTICON, 7, 6, 5, 4, 3, 2, 1, 1),
-				new Transformer("Overkill", TransformerTeamEnum.DECEPTICON, 7, 6, 5, 4, 3, 2, 1, 1));
-		Mockito.when(repository.findAll()).thenReturn(tl1);
+				new Transformer("Overkill", TransformerTeamEnum.DECEPTICON, 7, 6, 5, 4, 3, 2, 1, 1)));
+		Pageable peageble = PageRequest.of(0, listSize);
+		Mockito.when(repository.findAll(peageble)).thenReturn(tl1);
 
-		List<TransformerDto> tl2 = service.list();
+		List<TransformerDto> tl2 = service.list(peageble).getContent();
 		Assertions.assertEquals(tl2.size(), listSize);
 	}
 

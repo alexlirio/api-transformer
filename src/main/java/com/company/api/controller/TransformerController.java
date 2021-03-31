@@ -8,6 +8,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,19 +35,18 @@ public class TransformerController {
 	TransformerService service;
 
 	@PostMapping("/registry/transformers")
-	public ResponseEntity<TransformerDto> create(@Valid @RequestBody TransformerDto dto) {
-		logger.info("create() object '{}' with: {}", dto.getClass().getSimpleName(), dto);
-		dto = service.create(dto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
-		return ResponseEntity.created(uri).body(dto);
+	public ResponseEntity<TransformerDto> create(@Valid @RequestBody TransformerDto transformerDto) {
+		logger.info("create() object '{}' with: {}", transformerDto.getClass().getSimpleName(), transformerDto);
+		transformerDto = service.create(transformerDto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(transformerDto.getId()).toUri();
+		return ResponseEntity.created(uri).body(transformerDto);
 	}
 
 	@PutMapping("/registry/transformers/{id}")
-	public ResponseEntity<TransformerDto> update(@Valid @PathVariable Long id, @RequestBody TransformerDto dto) {
-		logger.info("update() object '{}' id '{}' with: {}", dto.getClass().getSimpleName(), id, dto);
-		dto.setId(id);
-		dto = service.update(dto);
-		return ResponseEntity.ok().body(dto);
+	public TransformerDto update(@Valid @PathVariable Long id, @RequestBody TransformerDto transformerDto) {
+		logger.info("update() object '{}' id '{}' with: {}", transformerDto.getClass().getSimpleName(), id, transformerDto);
+		transformerDto.setId(id);
+		return service.update(transformerDto);
 	}
 
 	@DeleteMapping("/registry/transformers/{id}")
@@ -56,15 +57,14 @@ public class TransformerController {
 	}
 
 	@GetMapping("/registry/transformers")
-	public ResponseEntity<List<TransformerDto>> list() {
+	public Page<TransformerDto> list(Pageable pegeable) {
 		logger.info("list() object '{}'", TransformerDto.class.getSimpleName());
-		List<TransformerDto> dtos = service.list();
-		return ResponseEntity.ok().body(dtos);
+		return service.list(pegeable);
 	}
 
 	@PostMapping("/war/transformers")
-	public ResponseEntity<TransformerWarDto> war(@RequestBody List<Long> ids) {
+	public TransformerWarDto war(@RequestBody List<Long> ids) {
 		logger.info("War() object '{}' with: {}", ids.getClass().getSimpleName(), ids);
-		return ResponseEntity.ok().body(service.war(ids));
+		return service.war(ids);
 	}
 }

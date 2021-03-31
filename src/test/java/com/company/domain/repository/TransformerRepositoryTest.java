@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.PageRequest;
 
 import com.company.domain.entity.Transformer;
 import com.company.domain.entity.TransformerTeamEnum;
@@ -49,6 +50,6 @@ public class TransformerRepositoryTest {
 
 	@Test
 	void list() {
-		Assertions.assertThat(this.repository.findAll().size()).isGreaterThan(0);
+		Assertions.assertThat(this.repository.findAll(PageRequest.of(0, 10)).getContent().size()).isGreaterThan(0);
 	}
 }
