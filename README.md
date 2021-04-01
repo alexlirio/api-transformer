@@ -27,6 +27,37 @@ Once the application runs you should see something like this
 2021-03-31 16:00:36.159  INFO 429671 --- [restartedMain] com.company.ApiTransformerApplication    : Started ApiTransformerApplication in 3.491 seconds (JVM running for 3.93)
 ```
 
+## Tests
+
+The application tests are organized by repositories, services, and controllers. You can run all tests by running the ```mvn test``` command, or you can run all tests for a specific package using one of the commands below:
+
+```
+        mvn '-Dtest=com.company.domain.repository.*Test' test
+or
+        mvn '-Dtest=com.company.api.service.*Test' test
+or
+        mvn '-Dtest=com.company.api.controller.*Test' test
+```
+
+* Check the results on stdout
+
+Once the application tests runs you should see something like this
+
+```
+...
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  12.413 s
+[INFO] Finished at: 2021-04-01T08:24:27-03:00
+[INFO] ------------------------------------------------------------------------
+
+```
+
 ## About the Service
 
 The service is just a War Transformer API REST service. It uses an in-memory database (H2) to store the data. You can also do with a relational database like PostgreSQL. If your database connection properties work, you can call some REST endpoints defined in ```com.company.api.controller.TransformerController``` on **port 8080**. (see below)
