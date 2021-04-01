@@ -307,7 +307,7 @@ spring.datasource.password=mysecretpassword
 ```
         mvn spring-boot:run -Dspring-boot.run.profiles=dev
 or
-        java -jar -Dspring.profiles.active=dev target/api-transformer-0.0.1-SNAPSHOT.jar
+        java -jar -Dspring.profiles.active=dev target/api-transformer-1.0.0.jar
 ```
 
 # Attaching to the app remotely from your IDE
@@ -315,10 +315,8 @@ or
 Run the service with these command line options:
 
 ```
-        mvn spring-boot:run -Drun.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"
+        mvn spring-boot:run -Dagentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000
 or
-        java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -Dspring.profiles.active=test -Ddebug -jar target/api-transformer-0.0.1-SNAPSHOT.jar
+        java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000 -Dspring.profiles.active=test -Ddebug -jar target/api-transformer-1.0.0.jar
 ```
-and then you can connect to it remotely using your IDE. For example, from IntelliJ You have to add remote debug configuration: Edit configuration -> Remote.
-
-# Questions and Comments: alexlirioti@gmail.com
+and then you can connect to it remotely using your IDE. For example, from Eclipse you have to add a new debug configuration: Run -> Debug Configurations -> Remote Java Application -> New Configuration.
