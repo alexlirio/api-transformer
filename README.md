@@ -78,11 +78,17 @@ Here is what this little application demonstrates:
 
 Here are some endpoints you can call:
 
-### Get information about system health.
+### Get information about system health
 
 ```
 http://localhost:8080/actuator/health
-http://127.0.0.1:8080/actuator/info
+http://localhost:8080/actuator/info
+```
+
+### To view Swagger 2 API docs
+
+```
+http://localhost:8080/swagger-ui/#/transformer-controller
 ```
 
 ### Create a Transformer
@@ -274,10 +280,6 @@ Response: HTTP 200 (Ok)
 }
 ```
 
-### To view Swagger 2 API docs
-
-Run the server and browse to http://localhost:8080/swagger-ui/#/
-
 ### To view your H2 in-memory database
 
 The 'test' profile runs on H2 in-memory database. To view and query the database you can browse to http://localhost:8080/h2-console. Default username is 'sa' with a blank password. Make sure you disable this in your production profiles. For more, see https://goo.gl/U8m62X
@@ -308,6 +310,38 @@ spring.datasource.password=mysecretpassword
         mvn spring-boot:run -Dspring-boot.run.profiles=dev
 or
         java -jar -Dspring.profiles.active=dev target/api-transformer-1.0.0.jar
+```
+
+# GitHub CI (Heroku)
+
+The project has a GitHub workflow created and following the Gitflow standard is mandatory. Every push to 'main' branch will deploy a new version of this app on Heroku [api-transformer.herokuapp.com](http://api-transformer.herokuapp.com/actuator/info). Deploys happen automatically if the commit passes all automated tests.
+
+Attention: The first request to Heroku may take a while but from the second request it is faster. The Heroku free account sleeps the application after some time without use.
+
+Here are some endpoints you can call:
+
+### Get information about system health (Heroku)
+
+```
+https://api-transformer.herokuapp.com/actuator/health
+https://api-transformer.herokuapp.com/actuator/info
+```
+
+### To view Swagger 2 API docs (Heroku)
+
+```
+https://api-transformer.herokuapp.com/swagger-ui/#/transformer-controller
+```
+
+### All Transformer Controller methods (Heroku)
+ More details, as a body, of the methods below can be found in the 'About the Service' section on this document.
+
+```
+POST https://api-transformer.herokuapp.com/api/v1/registry/transformers
+PUT https://api-transformer.herokuapp.com/api/v1/registry/transformers/1
+DELETE https://api-transformer.herokuapp.com/api/v1/registry/transformers/1
+GET https://api-transformer.herokuapp.com/api/v1/registry/transformers?page=0&size=20
+POST https://api-transformer.herokuapp.com/api/v1/war/transformers
 ```
 
 # Attaching to the app remotely from your IDE
