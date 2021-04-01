@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.company.api</groupId>
 	<artifactId>api-transformer</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<name>api-transformer</name>
 	<description>API Transformer</description>
 	<properties>
