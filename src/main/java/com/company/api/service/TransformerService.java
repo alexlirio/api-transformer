@@ -8,6 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -76,10 +78,9 @@ public class TransformerService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<TransformerDto> list() {
+	public Page<TransformerDto> list(Pageable pegeable) {
 		logger.info("list() object '{}'", TransformerDto.class.getSimpleName());
-		List<Transformer> result = repository.findAll();
-		return result.stream().map(o -> new TransformerDto(o)).collect(Collectors.toList());
+		return repository.findAll(pegeable).map(o -> new TransformerDto(o));
 	}
 
 	@Transactional
