@@ -5,6 +5,13 @@
 **Hotfixes:**
 - None
 
+## 1.0.2 - April 1st, 2021
+**Features:**
+- Initial version
+
+**Hotfixes:**
+- README.md with new instructions to remote debug
+
 ## 1.0.1 - April 1st, 2021
 **Features:**
 - Initial version
