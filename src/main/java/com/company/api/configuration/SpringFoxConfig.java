@@ -3,6 +3,8 @@ package com.company.api.configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -25,6 +27,7 @@ public class SpringFoxConfig {
         		.apis(RequestHandlerSelectors.basePackage("com.company.api.controller"))
         		.paths(PathSelectors.ant("/api/**"))
         		.build()
+        		.ignoredParameterTypes(Pageable.class, Sort.class)
         		.apiInfo(metaData());
     }
 
