@@ -34,7 +34,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build with Maven
         run: |
-          cd..
+          cd ..
           mvn --batch-mode --update-snapshots verify
 
       # Upload Artifact
