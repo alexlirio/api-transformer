@@ -11,5 +11,5 @@ public interface ITransformerRepository extends PagingAndSortingRepository<Trans
 
 	Boolean existsByNameIgnoreCase(String name);
 
-	List<Transformer> findAllByIdInAndTeamOrderByRankAsc(Iterable<Long> ids, TransformerTeamEnum team);
+	List<Transformer> findAllByIdInAndTeamOrderByRankDesc(Iterable<Long> ids, TransformerTeamEnum team);
 }

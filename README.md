@@ -2,6 +2,40 @@
 
 The Transformers are at war and you are in charge of settling the score! This API evaluates who wins a fight between the Autobots and the Decepticons.
 
+**The basic rules of the war**
+* The transformers are split into two teams based on if they are Autobots or Decepticons.
+* The teams should be sorted by rank and faced off one on one against each other in order to determine a victor, the loser is eliminated.
+* A battle between opponents uses the following rules:  
+  ** If any fighter is down 4 or more points of courage and 3 or more points of strength compared to their opponent, the opponent automatically wins the face-off regardless of overall rating (opponent has ran away).  
+  ** Otherwise, if one of the fighters is 3 or more points of skill above their opponent, they win the fight regardless of overall rating  
+* The winner is the Transformer with the highest overall rating.
+* In the event of a tie, both Transformers are considered destroyed.
+* Any Transformers who don’t have a fight are skipped (i.e. if it’s a team of 2 vs. a team of 1, there’s only going to be one battle).
+* The team who eliminated the largest number of the opposing team is the winner.  
+  
+**Special rules**  
+* Any Transformer named Optimus Prime or Predaking wins his fight automatically regardless of any other criteria.
+* In the event either of the above face each other (or a duplicate of each other), the game immediately ends with all competitors destroyed.  
+  
+**For example, given the following**  
+* To the input:
+  ** Soundwave, DECEPTICON, 8, 9, 2, 6, 7, 5, 6, 10
+  ** Bluestreak, AUTOBOT, 6, 6, 7, 9, 5, 2, 9, 7
+  ** Hubcap: AUTOBOT, 4, 4, 4, 4, 4, 4, 4, 4  
+* The output should be:
+  ** 1 battle Winning team (Decepticons): Soundwave
+  ** Survivors from the losing team (Autobots): Hubcap
+
+**List of default transformers created on startup**  
+* #1 Optimus Prime, AUTOBOT, 10, 9, 8, 7, 6, 5, 4, 3
+* #2 Bumblebee, AUTOBOT, 9, 8, 7, 6, 5, 4, 3, 2
+* #3 Bluestreak, AUTOBOT, 6, 6, 7, 9, 5, 2, 9, 7
+* #4 Hubcap, AUTOBOT, 4, 4, 4, 4, 4, 4, 4, 4
+* #5 Predaking, DECEPTICON, 10, 9, 8, 7, 6, 5, 4, 3
+* #6 Soundwave, DECEPTICON, 8, 9, 2, 6, 7, 5, 6, 10
+* #7 Shockwave, DECEPTICON, 8, 7, 6, 5, 4, 3, 2, 1
+* #8 Arcee, AUTOBOT, 6, 5, 4, 3, 2, 1, 1, 1
+
 ## How to Run 
 
 This application is packaged as a jar which has Tomcat 9 embedded. No Tomcat or JBoss installation is necessary. You run it using the ```java -jar``` command.
@@ -78,11 +112,17 @@ Here is what this little application demonstrates:
 
 Here are some endpoints you can call:
 
-### Get information about system health.
+### Get information about system health
 
 ```
 http://localhost:8080/actuator/health
-http://127.0.0.1:8080/actuator/info
+http://localhost:8080/actuator/info
+```
+
+### To view Swagger 2 API docs
+
+```
+http://localhost:8080/swagger-ui/#/transformer-controller
 ```
 
 ### Create a Transformer
@@ -274,10 +314,6 @@ Response: HTTP 200 (Ok)
 }
 ```
 
-### To view Swagger 2 API docs
-
-Run the server and browse to http://localhost:8080/swagger-ui/#/
-
 ### To view your H2 in-memory database
 
 The 'test' profile runs on H2 in-memory database. To view and query the database you can browse to http://localhost:8080/h2-console. Default username is 'sa' with a blank password. Make sure you disable this in your production profiles. For more, see https://goo.gl/U8m62X
@@ -308,6 +344,38 @@ spring.datasource.password=mysecretpassword
         mvn spring-boot:run -Dspring-boot.run.profiles=dev
 or
         java -jar -Dspring.profiles.active=dev target/api-transformer-1.0.0.jar
+```
+
+# GitHub CI (Heroku)
+
+The project has a GitHub workflow created and following the Gitflow standard is mandatory. Every push to 'main' branch will deploy a new version of this app on Heroku [api-transformer.herokuapp.com](http://api-transformer.herokuapp.com/actuator/info). Deploys happen automatically if the commit passes all automated tests.
+
+Attention: The first request to Heroku may take a while but from the second request it is faster. The Heroku free account sleeps the application after some time without use.
+
+Here are some endpoints you can call:
+
+### Get information about system health (Heroku)
+
+```
+https://api-transformer.herokuapp.com/actuator/health
+https://api-transformer.herokuapp.com/actuator/info
+```
+
+### To view Swagger 2 API docs (Heroku)
+
+```
+https://api-transformer.herokuapp.com/swagger-ui/#/transformer-controller
+```
+
+### All Transformer Controller methods (Heroku)
+ More details, as a body, of the methods below can be found in the 'About the Service' section on this document.
+
+```
+POST https://api-transformer.herokuapp.com/api/v1/registry/transformers
+PUT https://api-transformer.herokuapp.com/api/v1/registry/transformers/1
+DELETE https://api-transformer.herokuapp.com/api/v1/registry/transformers/1
+GET https://api-transformer.herokuapp.com/api/v1/registry/transformers?page=0&size=20
+POST https://api-transformer.herokuapp.com/api/v1/war/transformers
 ```
 
 # Attaching to the app remotely from your IDE

@@ -34,7 +34,7 @@ public class SpringFoxConfig {
 	private ApiInfo metaData() {
 		return new ApiInfoBuilder()
 		        .title("API Transformer")
-		        .description("Spring Boot REST API for the Transformer Tech Challenge")
+		        .description("Spring Boot REST API for the Transformer")
 		        .version(appVersion)
 		        .license("Apache 2.0")
 		        .contact(new Contact("Alex Lirio", "https://www.linkedin.com/in/alexlirio", "alexlirioti@gmail.com"))

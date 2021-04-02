@@ -90,8 +90,8 @@ public class TransformerServiceTest {
 	public void war() {
 		List<Long> ids = List.of(1L, 5L);
 		String exceptionMessage = "Method not implemented yet";
-		Mockito.doThrow(new NoSurvivorException(exceptionMessage)).when(repository).findAllByIdInAndTeamOrderByRankAsc(ids, TransformerTeamEnum.AUTOBOT);
-		Mockito.doThrow(new NoSurvivorException(exceptionMessage)).when(repository).findAllByIdInAndTeamOrderByRankAsc(ids, TransformerTeamEnum.DECEPTICON);
+		Mockito.doThrow(new NoSurvivorException(exceptionMessage)).when(repository).findAllByIdInAndTeamOrderByRankDesc(ids, TransformerTeamEnum.AUTOBOT);
+		Mockito.doThrow(new NoSurvivorException(exceptionMessage)).when(repository).findAllByIdInAndTeamOrderByRankDesc(ids, TransformerTeamEnum.DECEPTICON);
 
 		Exception ex = Assertions.assertThrows(NoSurvivorException.class, () -> service.war(ids));
 		Assertions.assertEquals(ex.getMessage(), exceptionMessage);
