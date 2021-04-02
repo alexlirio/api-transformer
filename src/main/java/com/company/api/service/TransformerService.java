@@ -91,11 +91,11 @@ public class TransformerService {
 
 		// #1. The transformers are split into two teams based on if they are Autobots or Decepticons.
 		// #2. The teams should be sorted by rank and faced off one on one against each other in order to determine a victor, the loser is eliminated.
-		List<TransformerDto> autobots = repository.findAllByIdInAndTeamOrderByRankAsc(ids, TransformerTeamEnum.AUTOBOT) // #2. Doubt: The worst ranked will battle before?
+		List<TransformerDto> autobots = repository.findAllByIdInAndTeamOrderByRankDesc(ids, TransformerTeamEnum.AUTOBOT) // #2. Doubt: The worst ranked will battle before?
 				.stream()
 				.map(t -> new TransformerDto(t))
 				.collect(Collectors.toList());
-		List<TransformerDto> decepticons = repository.findAllByIdInAndTeamOrderByRankAsc(ids, TransformerTeamEnum.DECEPTICON) // #2. Doubt: the worst ranked will battle before?
+		List<TransformerDto> decepticons = repository.findAllByIdInAndTeamOrderByRankDesc(ids, TransformerTeamEnum.DECEPTICON) // #2. Doubt: the worst ranked will battle before?
 				.stream()
 				.map(t -> new TransformerDto(t))
 				.collect(Collectors.toList());

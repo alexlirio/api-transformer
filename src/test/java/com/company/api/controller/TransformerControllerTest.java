@@ -89,6 +89,18 @@ public class TransformerControllerTest {
 
 	@Test
 	public void war() throws Exception {
+		String losingSurvivorName = "Hubcap";
+		List<Integer> list = List.of(6, 3, 4);
+		mvc.perform(MockMvcRequestBuilders.post("/api/v1/war/transformers")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(list)))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+		.andExpect(MockMvcResultMatchers.jsonPath("losingSurvivors[0].name", CoreMatchers.is(losingSurvivorName)));
+	}
+
+	@Test
+	public void givenTransformerWar_thenBadRequest() throws Exception {
 		List<Long> ids = List.of(1L, 5L);
 		mvc.perform(MockMvcRequestBuilders.post("/api/v1/war/transformers")
 				.contentType(MediaType.APPLICATION_JSON)
@@ -108,7 +120,7 @@ public class TransformerControllerTest {
 
 	@Test
 	public void givenTransformerWar_whenStatus200_thenGetChampionTeam() throws Exception {
-		String teamName = "DECEPTICON";
+		String teamName = "AUTOBOT";
 		List<Integer> list = List.of(1, 2, 3, 4, 5, 6, 7, 8);
 		mvc.perform(MockMvcRequestBuilders.post("/api/v1/war/transformers")
 				.contentType(MediaType.APPLICATION_JSON)
@@ -120,7 +132,7 @@ public class TransformerControllerTest {
 
 	@Test
 	public void givenTransformerWar_whenStatus200_thenGetFirstLosingSurvivorName() throws Exception {
-		String losingSurvivorName = "Bumblebee";
+		String losingSurvivorName = "Predaking";
 		List<Integer> list = List.of(1, 2, 3, 4, 5, 6, 7, 8);
 		mvc.perform(MockMvcRequestBuilders.post("/api/v1/war/transformers")
 				.contentType(MediaType.APPLICATION_JSON)
