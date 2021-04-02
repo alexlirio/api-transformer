@@ -1,3 +1,13 @@
+## 1.0.4 - April 2st, 2021
+**Features:**
+- Initial version
+
+**Hotfixes:**
+- Copy war rules to README.md
+- Replace the orderBy on the repository findAll method
+- Copy transformers from example to data.sql file
+- Add test case from the rule example
+
 ## 1.0.3 - April 1st, 2021
 **Features:**
 - Initial version
