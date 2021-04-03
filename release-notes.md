@@ -1,11 +1,11 @@
-## 1.0.5 - April 2st, 2021
+## 1.0.5 - April 2nd, 2021
 **Features:**
 - Initial version
 
 **Hotfixes:**
 - Profile test annotation to run tests correctly on every branch
 
-## 1.0.4 - April 2st, 2021
+## 1.0.4 - April 2nd, 2021
 **Features:**
 - Initial version
 
