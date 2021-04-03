@@ -1,3 +1,10 @@
+## 1.1.0-SNAPSHOT - XXXXX XXX, 2021
+**Features:**
+- None
+
+**Hotfixes:**
+- None
+
 ## 1.0.5 - April 2nd, 2021
 **Features:**
 - Initial version
