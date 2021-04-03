@@ -1,6 +1,6 @@
-## 1.1.0-SNAPSHOT - XXXXX XXX, 2021
+## 1.1.0-SNAPSHOT - April 3rd, 2021
 **Features:**
-- None
+- Add Flyway
 
 **Hotfixes:**
 - None
