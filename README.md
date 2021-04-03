@@ -318,7 +318,7 @@ Response: HTTP 200 (Ok)
 
 The 'test' profile runs on H2 in-memory database. To view and query the database you can browse to http://localhost:8080/h2-console. Default username is 'sa' with a blank password. Make sure you disable this in your production profiles. For more, see https://goo.gl/U8m62X
 
-# Running the project with a Relational Database (Developer Profile )
+# Running the project with a Relational Database (Developer Profile)
 
 This project uses an in-memory database so that you don't have to install a database in order to run it. However, converting it to run with another relational database such as PostgreSQL is very easy.
 
@@ -326,7 +326,7 @@ Here is what you would do to back the services with PostgreSQL, for example:
 
 ### Create a database
   
-Create a database named 'api-transformer', and create the tables with the file 'src/main/resources/create-dev.sql'.
+Create a database named 'api-transformer'.
 
 ### Configure your credentials in the 'src/main/resources/application-dev.properties' file: 
 
@@ -335,6 +335,11 @@ Create a database named 'api-transformer', and create the tables with the file '
 spring.datasource.url=jdbc:postgresql://localhost:5432/api-transformer
 spring.datasource.username=postgres
 spring.datasource.password=mysecretpassword
+
+spring.flyway.url=jdbc:postgresql://localhost:5432/api-transformer
+spring.flyway.user=postgres
+spring.flyway.password=mysecretpassword
+spring.flyway.baselineOnMigrate=true
 ...
 ```
 
@@ -345,6 +350,10 @@ spring.datasource.password=mysecretpassword
 or
         java -jar -Dspring.profiles.active=dev target/api-transformer-1.0.0.jar
 ```
+
+### Flyway
+
+This project uses Flyway to control the relational database migration. The version database files are saved in the standard Flyway path (resources/db/migration).
 
 # GitHub CI (Heroku)
 
