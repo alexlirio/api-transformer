@@ -1,4 +1,4 @@
-## 1.1.0-SNAPSHOT - April 3rd, 2021
+## 1.1.0 - April 3rd, 2021
 **Features:**
 - Add Flyway
 
