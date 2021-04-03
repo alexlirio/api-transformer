@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.company.api.dto.TransformerDto;
 import com.company.api.exception.EntityNotFoundException;
@@ -21,6 +22,7 @@ import com.company.domain.entity.Transformer;
 import com.company.domain.entity.TransformerTeamEnum;
 import com.company.domain.repository.ITransformerRepository;
 
+@ActiveProfiles("test")
 public class TransformerServiceTest {
 
 	@Mock
