@@ -1,3 +1,10 @@
+## 1.3.0 - XXXXX XXX, XXXX
+**Features:**
+- None
+
+**Hotfixes:**
+- None
+
 ## 1.2.0 - Mai 8th, 2021
 **Features:**
 - Add Lombok
