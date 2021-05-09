@@ -25,6 +25,9 @@ import com.company.domain.repository.ITransformerRepository;
 @ActiveProfiles("test")
 public class TransformerServiceTest {
 
+	Transformer t1;
+	TransformerDto t2;
+
 	@Mock
 	private ITransformerRepository repository;
 
@@ -34,17 +37,29 @@ public class TransformerServiceTest {
 	@BeforeEach
 	public void setup() {
 		MockitoAnnotations.openMocks(this);
+		t1 = new Transformer(null, null, TransformerTeamEnum.DECEPTICON, 7, 6, 5, 4, 3, 2, 1, 1);
+		t2 = TransformerDto.builder()
+				.team(TransformerTeamEnum.DECEPTICON)
+				.strength(7)
+				.intelligence(6)
+				.speed(5)
+				.endurance(4)
+				.rank(3)
+				.courage(2)
+				.firepower(1)
+				.skill(1)
+				.build();
 	}
 
 	@Test
 	public void create() {
 		Long transformerId = 11L;
 		String transformerName = "Rumble";
-		Transformer t1 = new Transformer(transformerName, TransformerTeamEnum.DECEPTICON, 7, 6, 5, 4, 3, 2, 1, 1);
 		t1.setId(transformerId);
+		t1.setName(transformerName);
 		Mockito.when(repository.save(Mockito.any())).thenReturn(t1);
 
-		TransformerDto t2 = new TransformerDto(transformerName, TransformerTeamEnum.DECEPTICON, 7, 6, 5, 4, 3, 2, 1, 1);
+		t2.setName(transformerName);
 		TransformerDto t3 = service.create(t2);
 		Assertions.assertEquals(t3.getId(), transformerId);
 	}
@@ -53,12 +68,12 @@ public class TransformerServiceTest {
 	public void update() {
 		Long transformerId = 12L;
 		String transformerName = "Overkill";
-		Transformer t1 = new Transformer(transformerName, TransformerTeamEnum.DECEPTICON, 7, 6, 5, 4, 3, 2, 1, 1);
 		t1.setId(transformerId);
+		t1.setName(transformerName);
 		Mockito.when(repository.existsById(Mockito.eq(transformerId))).thenReturn(true);
 		Mockito.when(repository.save(Mockito.any())).thenReturn(t1);
 
-		TransformerDto t2 = new TransformerDto("wrong name", TransformerTeamEnum.DECEPTICON, 7, 6, 5, 4, 3, 2, 1, 1);
+		t2.setName("wrong name");
 		t2.setId(transformerId);
 		TransformerDto t3 = service.update(t2);
 		Assertions.assertEquals(t3.getName(), transformerName);
@@ -79,8 +94,8 @@ public class TransformerServiceTest {
 	public void list() {
 		int listSize = 2;
 		Page<Transformer> tl1 = new PageImpl<Transformer>(List.of(
-				new Transformer("Rumble", TransformerTeamEnum.DECEPTICON, 7, 6, 5, 4, 3, 2, 1, 1),
-				new Transformer("Overkill", TransformerTeamEnum.DECEPTICON, 7, 6, 5, 4, 3, 2, 1, 1)));
+				new Transformer(null, "Rumble", TransformerTeamEnum.DECEPTICON, 7, 6, 5, 4, 3, 2, 1, 1),
+				new Transformer(null, "Overkill", TransformerTeamEnum.DECEPTICON, 7, 6, 5, 4, 3, 2, 1, 1)));
 		Pageable peageble = PageRequest.of(0, listSize);
 		Mockito.when(repository.findAll(peageble)).thenReturn(tl1);
 
@@ -91,7 +106,7 @@ public class TransformerServiceTest {
 	@Test
 	public void war() {
 		List<Long> ids = List.of(1L, 5L);
-		String exceptionMessage = "Method not implemented yet";
+		String exceptionMessage = "No Survivor";
 		Mockito.doThrow(new NoSurvivorException(exceptionMessage)).when(repository).findAllByIdInAndTeamOrderByRankDesc(ids, TransformerTeamEnum.AUTOBOT);
 		Mockito.doThrow(new NoSurvivorException(exceptionMessage)).when(repository).findAllByIdInAndTeamOrderByRankDesc(ids, TransformerTeamEnum.DECEPTICON);
 
