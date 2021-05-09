@@ -1,4 +1,4 @@
-## 1.2.0 - Mai 8rd, 2021
+## 1.2.0 - Mai 8th, 2021
 **Features:**
 - Add Lombok
 
