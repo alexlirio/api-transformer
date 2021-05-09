@@ -3,6 +3,7 @@ package com.company.api.controller;
 import java.util.List;
 
 import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,16 +25,33 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @ActiveProfiles("test")
 public class TransformerControllerTest {
 
+	TransformerDto t1;
+
 	@Autowired
 	private MockMvc mvc;
 
 	@Autowired
 	private ObjectMapper objectMapper;
 
+	@BeforeEach
+	public void setup() {
+		t1 = TransformerDto.builder()
+				.team(TransformerTeamEnum.DECEPTICON)
+				.strength(7)
+				.intelligence(6)
+				.speed(5)
+				.endurance(4)
+				.rank(3)
+				.courage(2)
+				.firepower(1)
+				.skill(1)
+				.build();
+	}
+
 	@Test
 	public void create() throws Exception {
 		String transformerName = "Rumble";
-		TransformerDto t1 = new TransformerDto(transformerName, TransformerTeamEnum.DECEPTICON, 7, 6, 5, 4, 3, 2, 1, 1);
+		t1.setName(transformerName);
 		mvc.perform(MockMvcRequestBuilders.post("/api/v1/registry/transformers")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(t1)))
@@ -45,7 +63,7 @@ public class TransformerControllerTest {
 	@Test
 	public void update() throws Exception {
 		String transformerName = "Overkill";
-		TransformerDto t1 = new TransformerDto(transformerName, TransformerTeamEnum.DECEPTICON, 7, 6, 5, 4, 3, 2, 1, 1);
+		t1.setName(transformerName);
 		ResultActions resultActions = mvc.perform(MockMvcRequestBuilders.post("/api/v1/registry/transformers")
 					.contentType(MediaType.APPLICATION_JSON)
 					.content(objectMapper.writeValueAsString(t1)))
@@ -68,7 +86,7 @@ public class TransformerControllerTest {
 	@Test
 	public void delete() throws Exception {
 		String transformerName = "Frenzy";
-		TransformerDto t1 = new TransformerDto(transformerName, TransformerTeamEnum.DECEPTICON, 7, 6, 5, 4, 3, 2, 1, 1);
+		t1.setName(transformerName);
 		ResultActions resultActions = mvc.perform(MockMvcRequestBuilders.post("/api/v1/registry/transformers")
 					.contentType(MediaType.APPLICATION_JSON)
 					.content(objectMapper.writeValueAsString(t1)))
