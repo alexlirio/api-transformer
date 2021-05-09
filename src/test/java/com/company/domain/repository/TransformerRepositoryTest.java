@@ -24,14 +24,14 @@ public class TransformerRepositoryTest {
 
 	@BeforeEach
 	void setup() {
-		String transformerName = "Rumble";
-		t1 = new Transformer(transformerName, TransformerTeamEnum.DECEPTICON, 7, 6, 5, 4, 3, 2, 1, 1);
+		t1 = new Transformer(null, "", TransformerTeamEnum.DECEPTICON, 7, 6, 5, 4, 3, 2, 1, 1);
 		t1 = this.repository.save(t1);
 	}
 
 	@Test
 	void create() {
 		String transformerName = "Rumble";
+		t1.setName(transformerName);
 		t1 = this.repository.save(t1);
 		Assertions.assertThat(t1.getName()).isEqualTo(transformerName);
 	}
