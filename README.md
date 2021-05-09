@@ -353,7 +353,15 @@ or
 
 ### Flyway
 
-This project uses Flyway to control the relational database migration. The version database files are saved in the standard Flyway path (resources/db/migration).
+The Flyway is used to control the database migration. The version database files are saved in the standard Flyway path (resources/db/migration). For more, see https://flywaydb.org/
+
+### ModelMapper
+
+The ModelMapper is used to make object mapping easy (Entity to DTO, DTO to Entity, etc). For more, see http://modelmapper.org
+
+### Lombok
+
+The Lombok is used to avoid write Java Boilerplate Codes (getters, setters, constructors, tostring, equals, hashcode, builder, etc). For more, see https://projectlombok.org
 
 # GitHub CI (Heroku)
 
